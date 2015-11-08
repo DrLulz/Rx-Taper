@@ -20,12 +20,18 @@ def rx(dose, days):
 def main():
     
     phases = []
-    taper = [{'size': 60, 'days': 60}, {'size': 50, 'days': 30}]
     
-    for d in taper:
-        size = d.get('size')
-        days = d.get('days')
-        phases.append(rx(size, days))
+    args = {
+         '1': {'dose': 60, 'time': 60},
+         '2': {'dose': 50, 'time': 30}
+         }
+    
+    
+    for k in args:
+        dose = args[k].get('dose')
+        time = args[k].get('time')
+        phases.append(rx(dose, time))
+    
         
     result = dict.fromkeys(set().union(*phases), 0)
 
@@ -33,7 +39,6 @@ def main():
         for k in d.keys():
             result[k] += d[k]
         
-    print result
     print sorted(result.items(), key=lambda x: x[1], reverse=True)
     
 
