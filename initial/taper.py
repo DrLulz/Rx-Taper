@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 def get_sizes(dose):
     tots = []
     for mg in [50, 20, 10, 5, 2.5, 1]:
@@ -21,11 +24,14 @@ def main():
     
     phases = []
     
-    args = {
-         '1': {'dose': 60, 'time': 60},
-         '2': {'dose': 50, 'time': 30}
-         }
+    args = { '1': {'dose': 60, 'time': 20}, '2': {'dose': 30, 'time': 15} }
     
+#    phases = { {'dose': 20, 'quantity': 30}, {'dose': 10, 'quantity': 50} }
+#    args = {'1': {'dose':60, 'time':60}}
+    
+    
+    # --------------------------------------------
+    # Iterate Phases
     
     for k in args:
         dose = args[k].get('dose')
@@ -34,12 +40,18 @@ def main():
     
         
     result = dict.fromkeys(set().union(*phases), 0)
+    
 
+    
     for d in phases:
         for k in d.keys():
             result[k] += d[k]
-        
-    print sorted(result.items(), key=lambda x: x[1], reverse=True)
+    
+
+    yield_ = dict(sorted(result.items(), key=lambda x: x[1], reverse=True))
+    
+    for k, v in yield_.items():
+        print k
     
 
 
